@@ -1,4 +1,7 @@
 import prompt
+from src.primitive_db.core import create_table, drop_table, list_tables
+from src.primitive_db.utils import load_metadata
+
 
 
 def show_help():
@@ -14,11 +17,36 @@ def show_help():
 
 def process_command(command):
     """Обработка команд пользователя"""
-    match command:
+    match command.split(" ")[0]:
         case "help":
             show_help()
         case "quit" | "exit":
             print("Выход.")
+        case "create_table":
+            if len(command.split(" ")) < 2:
+                print(f"Некорректное значение: <{command.split(" ")[1:]}>.Попробуйте снова.")
+            else:
+                create_table(
+                    metadata=load_metadata(),
+                    table_name=command.split(" ")[1],
+                    columns=command.split(" ")[2:]
+                    )
+        case "list_tables":
+            if len(command.split(" ")) > 1:
+                print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
+            else:
+                list_tables(metadata=load_metadata())
+        case "drop_table":
+            if len(command.split(" ")) != 2:
+                print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
+            else:
+                drop_table(
+                    metadata=load_metadata(),
+                    table_name=command.split(" ")[1]
+                    )
+        case _:
+            print(f"Функции <{command.split(" ")[0]}> нет. Попробуйте снова.")
+
 
 
 def welcome():

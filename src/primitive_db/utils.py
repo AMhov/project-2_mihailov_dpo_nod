@@ -1,4 +1,7 @@
 import json
+from util_read_config import read_config
+
+filepath = read_config().get('FILEPATH')
 
 
 def load_metadata(filepath):
@@ -18,5 +21,3 @@ def save_metadata(filepath, data):
     except Exception as e:
         print(f"Error saving metadata: {e}")
     
-
-filepath = 'db_meta.json'

@@ -1,7 +1,9 @@
 import prompt
 from src.primitive_db.core import create_table, drop_table, list_tables
 from src.primitive_db.utils import load_metadata
+from src.primitive_db.util_read_config import read_config
 
+filepath = read_config().get('constants').get('FILEPATH')
 
 
 def show_help():
@@ -27,21 +29,23 @@ def process_command(command):
                 print(f"Некорректное значение: <{command.split(" ")[1:]}>.Попробуйте снова.")
             else:
                 create_table(
-                    metadata=load_metadata(),
+                    metadata=load_metadata(filepath),
                     table_name=command.split(" ")[1],
                     columns=command.split(" ")[2:]
                     )
         case "list_tables":
+            print("дошел до case")
             if len(command.split(" ")) > 1:
                 print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
             else:
-                list_tables(metadata=load_metadata())
+                print("я здесь")
+                list_tables(metadata=load_metadata(filepath))
         case "drop_table":
             if len(command.split(" ")) != 2:
                 print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
             else:
                 drop_table(
-                    metadata=load_metadata(),
+                    metadata=load_metadata(filepath),
                     table_name=command.split(" ")[1]
                     )
         case _:

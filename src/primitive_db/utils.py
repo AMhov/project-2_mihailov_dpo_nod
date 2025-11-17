@@ -1,8 +1,8 @@
 import json
 import os
-from util_read_config import read_config
+from src.primitive_db.util_read_config import read_config
 
-filepath = read_config().get('FILEPATH')
+filepath = read_config().get('constants').get('FILEPATH')
 
 
 def load_metadata(filepath):

@@ -6,7 +6,7 @@ def create_table(metadata: dict, table_name: str, columns: list) -> None:
     if not metadata.get(table_name):
         columns = ['ID:int'] + columns
         data_type = [col_name.split(':')[1] for col_name in columns]
-        if set(data_type) == set(['boo', 'int', 'str']):
+        if set(data_type) == set(['bool', 'int', 'str']):
             print(f"Таблица {table_name} успешно создана со столбцами: {', '.join(columns)}")
         else:
             print("Ошибка: Неверный тип данных в столбцах.")

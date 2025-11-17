@@ -2,7 +2,7 @@
 *.vscode
 .venv
 .ruff_cache
-.test
+src/primitive_db/test.py
 dist
 
 # Byte-compiled / optimized / DLL files

@@ -1,5 +1,5 @@
 import prompt
-from src.primitive_db.core import *
+from src.primitive_db.core import create_table, drop_table, list_tables
 from src.primitive_db.utils import load_metadata
 
 

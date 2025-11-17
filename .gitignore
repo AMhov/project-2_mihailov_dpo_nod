@@ -4,6 +4,7 @@
 .ruff_cache
 src/primitive_db/test.py
 dist
+poetry.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

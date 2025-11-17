@@ -1,2 +1,2 @@
 constants:
-  FILEPATH : 'db_meta.json'
+  FILEPATH : 'src/primitive_db/db_meta.json'

@@ -1,8 +1,14 @@
 import json
 import os
-from src.primitive_db.util_read_config import read_config
+import yaml
 
-filepath = read_config().get('constants').get('FILEPATH')
+
+config_path = 'src/config.yaml'
+
+def read_config():
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+    return config
 
 
 def load_metadata(filepath):

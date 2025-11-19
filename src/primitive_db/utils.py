@@ -15,7 +15,7 @@ def load_metadata(filepath):
     try:
         # Проверяем размер файла перед чтением (начало работы с пустой базой)
         if os.path.getsize(filepath) == 0:
-            print(f"Файл метаданных - '{filepath}', пустой.")
+            #print(f"Файл метаданных - '{filepath}', пустой.")
             return {}
             
         with open(filepath, 'r') as f:

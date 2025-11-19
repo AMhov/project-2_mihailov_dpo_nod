@@ -53,12 +53,16 @@ def process_command(command):
             print(f"Функции <{command[0]}> нет. Попробуйте снова.")
 
 
-
-def welcome():
-    print("Первая попытка запустить проект!", "\n\n***")
+def run():
+    """Запуск проекта"""
     show_help()
-
     while _CONDITION:
         user_input = prompt.string(" Введите команду_ ")
         args = shlex.split(user_input)
         process_command(args)
+
+
+def welcome():
+    """Приветствие"""
+    print("Добрый день! Запускаем проект - DATABASE!", "\n\n***")
+    run()

@@ -1,9 +1,11 @@
+import shlex
 import prompt
 from src.primitive_db.core import create_table, drop_table, list_tables
 from src.primitive_db.utils import read_config, load_metadata
 
 _FILEPATH = read_config().get('constants').get('FILEPATH')
-
+_CONDITION = True
+metadata = load_metadata(_FILEPATH)
 
 def show_help():
     """Показать справку"""
@@ -18,35 +20,37 @@ def show_help():
 
 def process_command(command):
     """Обработка команд пользователя"""
-    match command.split(" ")[0]:
+    match command[0]:
         case "help":
             show_help()
         case "quit" | "exit":
+            global _CONDITION
+            _CONDITION = False
             print("Выход.")
         case "create_table":
-            if len(command.split(" ")) < 2:
-                print(f"Некорректное значение: <{command.split(" ")[1:]}>.Попробуйте снова.")
+            if len(command) < 2:
+                print(f"Некорректное значение: <{command[1:]}>.Попробуйте снова.")
             else:
                 create_table(
-                    metadata=load_metadata(_FILEPATH),
-                    table_name=command.split(" ")[1],
-                    columns=command.split(" ")[2:]
+                    metadata=metadata,
+                    table_name=command[1],
+                    columns=command[2:]
                     )
         case "list_tables":
-            if len(command.split(" ")) > 1:
-                print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
+            if len(command) > 1:
+                print(f"Некорректное значение: <{command[1:]}>. Попробуйте снова.")
             else:
-                list_tables(metadata=load_metadata(_FILEPATH))
+                list_tables(metadata=metadata)
         case "drop_table":
-            if len(command.split(" ")) != 2:
-                print(f"Некорректное значение: <{command.split(" ")[1:]}>. Попробуйте снова.")
+            if len(command) != 2:
+                print(f"Некорректное значение: <{command[1:]}>. Попробуйте снова.")
             else:
                 drop_table(
-                    metadata=load_metadata(_FILEPATH),
-                    table_name=command.split(" ")[1]
+                    metadata=metadata,
+                    table_name=command[1]
                     )
         case _:
-            print(f"Функции <{command.split(" ")[0]}> нет. Попробуйте снова.")
+            print(f"Функции <{command[0]}> нет. Попробуйте снова.")
 
 
 
@@ -54,6 +58,7 @@ def welcome():
     print("Первая попытка запустить проект!", "\n\n***")
     show_help()
 
-    command = prompt.string(" Введите команду_ ")
-
-    process_command(command)
+    while _CONDITION:
+        user_input = prompt.string(" Введите команду_ ")
+        args = shlex.split(user_input)
+        process_command(args)

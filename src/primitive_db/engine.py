@@ -14,7 +14,6 @@ def show_help():
     print("<command> create_table <имя_таблицы> <столбец1:тип> .. - создать таблицу")
     print("<command> list_tables - показать список всех таблиц")
     print("<command> drop_table <имя_таблицы> - удалить таблицу")
-    print("\nОбщие команды:")
     print("<command> exit - выход из программы")
     print("<command> help - справочная информация\n") 
 
@@ -64,5 +63,5 @@ def run():
 
 def welcome():
     """Приветствие"""
-    print("Добрый день! Запускаем проект - DATABASE!", "\n\n***")
+    print("***База данных***")
     run()

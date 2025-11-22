@@ -32,4 +32,24 @@ def save_metadata(filepath, data):
             json.dump(data, f, indent=4)
     except Exception as e:
         print(f"Error saving metadata: {e}")
+
+
+def load_table_data(table_name):
+    if os.path.exists(f'src/data/{table_name}.json'):
+        with open(f'src/data/{table_name}.json', 'r') as f:
+            return json.load(f)
+    else:
+        return []
+
+
+def save_table_data(table_name, data):
+    if data:
+        with open(f'src/data/{table_name}.json', 'w') as f:
+            json.dump(data, f, indent=4)
+    else:
+        if os.path.exists(f'src/data/{table_name}.json'):
+            os.remove(f'src/data/{table_name}.json')
+
+
+
     

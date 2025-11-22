@@ -44,3 +44,36 @@ def list_tables(metadata: dict) -> list:
             print("Ошибка: Нет таблиц в базе данных.")
     except:
         print("Метаданные получены неверно.")
+
+
+def insert(metadata, table_name, values):
+    """Добавление данных в таблицу"""
+    if metadata.get(table_name):
+        if len(values) == len(metadata[table_name]) - 1:
+            if all(isinstance(value, str) for value in values):        # ???? need check
+                values = [None] + values
+                metadata[table_name]['data'].append(values)
+                save_metadata(_FILEPATH, metadata)
+                print(f"Запись {values} успешно добавлена в таблицу {table_name}.")
+                return metadata # ???????????
+            
+
+def select(table_data, where_clause:dict=None):
+    """Отбор и фильтрация данных при наличии фильтров"""
+    if where_clause:
+        for key, value in where_clause.items():
+            if key in table_data[0]:
+                table_data = [row for row in table_data if row[table_data[0].index(key)] == value]
+        return table_data
+    else:
+        return table_data
+    
+
+def update(table_data, set_clause, where_clause:dict):
+    """Обновление данных в таблице"""
+    if where_clause:
+        for key, value in where_clause.items():
+        #     if key in table_data[0]:
+        #         table_data = [row for row in table_data if row[table_data[0].index(key)] == value]
+        # for key, value in set_clause.items():
+        #     if key in table_data[0]:
